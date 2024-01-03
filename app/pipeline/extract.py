@@ -1,4 +1,4 @@
-# Imports
+# Importing libs
 from dotenv import load_dotenv
 import os
 import json
@@ -12,10 +12,10 @@ client_secret = os.getenv("client_secret")
 
 def get_token():
   """
-  Requests an access token from the Spotify API using client credentials.
+  Requests an access token from the Spotify's API using client credentials.
     
   Returns:
-  str: Access token for Spotify API.
+  str: Access token for Spotify's API.
 
   Important:
   - This function requires 'client_id' and 'client_secret' to be defined before calling.
@@ -29,7 +29,6 @@ def get_token():
   Note:
   Ensure 'client_id' and 'client_secret' variables are set correctly before calling this function.
   """
-
   auth_string = client_id + ":" + client_secret
   auth_bytes = auth_string.encode("utf-8")
   auth_base64 = str(base64.b64encode(auth_bytes), "utf-8")
@@ -49,28 +48,27 @@ def get_token():
 
 def get_auth_header(token):
   """
-  Generates an authorization header for the Spotify API using the provided token.
+  Generates an authorization header for the Spotify's API using the provided token.
     
   Args:
-  token (str): The access token obtained from the Spotify API.
+  token (str): The access token obtained from the Spotify's API.
 
   Returns:
   dict: Authorization header in a dictionary format.
 
   Note:
-  This function specifically generates the 'Authorization' header needed for Spotify API requests.
+  This function specifically generates the 'Authorization' header needed for Spotify's API requests.
   It employs the token obtained from the 'get_token()' function or any other valid access token.
   """
-
   return {"Authorization": f"Bearer {token}"}
 
 
 def search_for_artist(token, artist_name):
   """
-  Searches for an artist using the Spotify API.
+  Searches for an artist using the Spotify's API.
 
   Args:
-  token (str): The access token obtained from the Spotify API.
+  token (str): The access token obtained from the Spotify's API.
   artist_name (str): The name of the artist to search for.
 
   Returns:
@@ -87,9 +85,8 @@ def search_for_artist(token, artist_name):
   HTTPError: If the request to Spotify's API fails or returns an error status code.
 
   Note:
-  Ensure 'token' is a valid access token obtained from the Spotify API.
+  Ensure 'token' is a valid access token obtained from the Spotify's API.
   """
-
   url = "https://api.spotify.com/v1/search"
   headers = get_auth_header(token)
   query = f"?q={artist_name}&type=artist&limit=1"
@@ -106,10 +103,10 @@ def search_for_artist(token, artist_name):
 
 def get_albums_by_artist(token, artist_id):
   """
-  Retrieves albums by a specific artist using the Spotify API.
+  Retrieves albums by a specific artist using the Spotify's API.
 
   Args:
-  token (str): The access token obtained from the Spotify API.
+  token (str): The access token obtained from the Spotify's API.
   artist_id (str): The unique identifier for the artist on Spotify.
 
   Returns:
@@ -118,16 +115,15 @@ def get_albums_by_artist(token, artist_id):
   Important:
   - This function uses the 'get_auth_header()' function to acquire the necessary authorization header.
   - It fetches albums by the artist identified by 'artist_id'.
-  - The Spotify API endpoint used includes the artist's ID to retrieve albums specifically for that artist.
+  - The Spotify API's endpoint used includes the artist's ID to retrieve albums specifically for that artist.
   - The 'country' parameter in the URL specifies a country code for regional results (here, 'BR' for Brazil).
 
   Raises:
   HTTPError: If the request to Spotify's API fails or returns an error status code.
 
   Note:
-  Ensure 'token' is a valid access token obtained from the Spotify API.
+  Ensure 'token' is a valid access token obtained from the Spotify's API.
   """
-
   url = f"https://api.spotify.com/v1/artists/{artist_id}/albums?country=BR"
   headers = get_auth_header(token)
   result = get(url, headers=headers)
