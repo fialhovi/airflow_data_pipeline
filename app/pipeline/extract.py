@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import os
 import json
 import base64
-from requests import post, get
+from httpx import post, get
 
 load_dotenv()
 
