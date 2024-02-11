@@ -17,6 +17,8 @@ black = "^24.1.1"
 pip-audit = "^2.7.0"
 taskipy = "^1.12.2"
 pre-commit = "^3.6.0"
+psycopg2 = "^2.9.9"
+sqlalchemy = "^2.0.26"
 
 
 [build-system]
