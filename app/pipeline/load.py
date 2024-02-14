@@ -21,10 +21,21 @@ Note:
     Modify the connection string and table structure as per your PostgreSQL setup and data requirements.
 """
 
+import os
+
 # Importing libs
 import pandas as pd
 import psycopg2
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
+
+load_dotenv()
+
+database = os.getenv("database")
+user = os.getenv("user")
+password = os.getenv("password")
+host = os.getenv("host")
+port = os.getenv("port")
 
 
 def dataframe_to_postgres(DataFrame):
@@ -40,14 +51,16 @@ def dataframe_to_postgres(DataFrame):
     - If data already exists in the table, it appends only the new data.
     - Ensure the DataFrame has the correct structure and column names corresponding to the table schema.
     """
-    engine = create_engine("postgresql://postgres:root@localhost:5432/postgres")
+    engine = create_engine(
+        f"postgresql://{user}:{password}@localhost:{port}/{database}"
+    )
     conn = engine.connect()
     conn1 = psycopg2.connect(
-        database="postgres",
-        user="postgres",
-        password="root",
-        host="127.0.0.1",
-        port="5432",
+        database=database,
+        user=user,
+        password=password,
+        host=host,
+        port=port,
     )
 
     conn1.autocommit = True
